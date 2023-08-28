@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://f8fwumgifhdu"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_e16wr"]
+[ext_resource type="Texture2D" uid="uid://blg22h3o318cp" path="res://Assets/player/player1.png" id="1_v4r72"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0obad"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l3dhe"]
+size = Vector2(16, 16)
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_e16wr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_v4r72")
+centered = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="PhysicsCollision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(10, 10)
+shape = SubResource("RectangleShape2D_0obad")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(10, 10)
+shape = SubResource("RectangleShape2D_l3dhe")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
